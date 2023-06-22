@@ -1,0 +1,205 @@
+import java.util.Scanner;
+
+public class Esercizio {
+
+	public static void main(String[] args) {
+
+	Scanner scann = new Scanner(System.in);//String  
+	Scanner scan = new Scanner(System.in);//float  
+	Scanner sca = new Scanner(System.in);//i  
+	
+	String nomeArtista = "";
+	String nomeAlbum = "";
+	int brani = 10;
+	float durataComplessiva = 0;
+	
+	System.out.println("NOME ARTISTA?");
+	nomeArtista = scann.nextLine();
+	System.out.println("NOME ALBUM?");
+	nomeAlbum = scann.nextLine();
+	System.out.println("DURATA COMPLESSIVA?");
+	durataComplessiva = scan.nextFloat();
+		
+	Album album = new Album(nomeArtista, nomeAlbum, brani, durataComplessiva);
+		
+	int scelta = 0;
+	
+	String nomeBrano = "";
+	float durataBrano = 0;
+	
+	int i = 0;
+	SviluppoMetodi controllo = new SviluppoMetodi(i);
+	do {
+		System.out.println("1) AGGIUNGI BRANO");
+		System.out.println("2) INFORMAZIONI ALBUM");
+		System.out.println("3) STAMPA BRANI");
+		
+		scelta = sca.nextInt();
+		
+		if(scelta == 2) {
+			album.informazioniAlbum();
+		}if(scelta == 1) {
+			System.out.println("COME SI CHIAMA IL BRANO?");
+			nomeBrano = scann.nextLine();
+			System.out.println("DURATA BRANO");
+			durataBrano = scan.nextFloat();
+			Brano b = new Brano(nomeBrano, durataBrano);
+			controllo.inserisciBrano(album, nomeBrano, durataBrano, b);
+		}if(scelta == 3) {
+			controllo.braniAlbum(album);
+		}
+	}while(scelta != 4);
+		
+	}
+} 
+***********
+//ALTRA CLASSE
+***********
+public class Album {
+
+	private String nomeArtista;
+	private String nomeAlbum;
+	private int numeroBrani;
+	private float durataComplessiva;
+	
+	Brano arrayBrani[] = new Brano[10];
+	
+	public Album(String nomeArtista, String nomeAlbum, int numeroBrani, float durataComplessiva) {
+		this.nomeArtista = nomeArtista;
+		this.nomeAlbum = nomeAlbum;
+		this.numeroBrani = numeroBrani;
+		this.durataComplessiva = durataComplessiva;
+	}
+
+	public String getNomeArtista() {
+		return nomeArtista;
+	}
+
+	public void setNomeArtista(String nomeArtista) {
+		this.nomeArtista = nomeArtista;
+	}
+
+	public String getNomeAlbum() {
+		return nomeAlbum;
+	}
+
+	public void setNomeAlbum(String nomeAlbum) {
+		this.nomeAlbum = nomeAlbum;
+	}
+
+	public int getNumeroBrani() {
+		return numeroBrani;
+	}
+
+	public void setNumeroBrani(int numeroBrani) {
+		this.numeroBrani = numeroBrani;
+	}
+
+	public float getDurataComplessiva() {
+		return durataComplessiva;
+	}
+
+	public void setDurataComplessiva(float durataComplessiva) {
+		this.durataComplessiva = durataComplessiva;
+	}
+
+	public Brano[] getArray() {
+		return arrayBrani;
+	}
+
+	public void setArray(Brano[] array) {
+		this.arrayBrani = array;
+	}
+	
+	
+	public void informazioniAlbum() {
+		System.out.println("ARTISTA: "+ this.nomeArtista);
+		System.out.println("NOME ALBUM: " + this.nomeAlbum);
+		System.out.println("BRANI: " + this.numeroBrani);
+		System.out.println("DURATA COMPLESSIVA: " + this.durataComplessiva + "MIN");
+	}
+	
+}
+
+*********
+//ALTRA CLASSE
+*********
+
+public class Brano {
+
+	private String nome;
+	private float durataBrano;
+	
+	public Brano(String nome, float durataBrano) {
+		this.nome = nome;
+		this.durataBrano = durataBrano;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public float getDurataBrano() {
+		return durataBrano;
+	}
+	public void setDurataBrano(float durataBrano) {
+		this.durataBrano = durataBrano;
+	}
+	
+}
+
+**********
+//ALTRA CLASSE
+**********
+
+public class SviluppoMetodi {
+	
+	private int i ;
+	public SviluppoMetodi(int i) {
+		this.i = i;
+	}
+	
+	public int getI() {
+		return i;
+	}
+
+	public void setI(int i) {
+		this.i = i;
+	}
+
+
+	public void inserisciBrano(Album album, String nomeBrano, float durataBrano, Brano brani) {
+		
+		if(i <10) {
+			if(i == 0) {
+				album.arrayBrani[i] = brani;
+				this.i++;
+				System.out.println("BRANO AGGIUNTO");
+			}else if(i>0) {
+				boolean trueFalse = false;
+				for(int x = 0; x < i; x++) {
+					if(album.arrayBrani[x].getNome().equals(brani.getNome())) {
+						System.out.println("QUESTO BRANO E' GIA PRESENTE");
+						trueFalse = true;
+					}
+				}if(trueFalse == false) {
+					album.arrayBrani[i] = brani;
+					System.out.println("BRANO AGGIUNTO");
+					this.i++;
+				}
+			}
+		}else {
+			System.out.println("L'ALBUM E PIENO");
+		}
+	}
+	
+	
+		public void braniAlbum(Album a) {
+			for(int z = 0; z < this.i; z++) {
+				System.out.println(a.arrayBrani[z].getNome() + " " + a.arrayBrani[z].getDurataBrano() + "MIN");
+			}
+		}
+	
+	
+	
